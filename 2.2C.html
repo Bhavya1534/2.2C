@@ -1,0 +1,152 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Tracker</title>
+    <style>
+        /* Basic styling for the header, main content, and footer */
+        body {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: bisque;
+        }
+        header {
+            background-color: cyan; /* Change background color here */
+            color: black;
+            text-align: center;
+            padding: 24px;
+            font-size: 24px;
+        }
+        main {
+            padding: 25px;
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: cyan;
+            color: black;
+        }
+        /* Styles for components */
+        .goal-form, .goal-list {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.4);
+            margin-bottom: 25px;
+        }
+        h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+        }
+        button {
+            background-color: cyan;
+            color: black;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            border: 1px solid #a99b9b;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>ProgressTracker</h1>
+        </header>
+        <main>
+            <!-- Goal creation form -->
+            <div class="goal-form">
+                <h2>Create a New Goal</h2>
+                <input v-model="newGoal.title" placeholder="Goal Title">
+                <textarea v-model="newGoal.description" placeholder="Goal Description"></textarea>
+                <input type="date" v-model="newGoal.dueDate">
+                <button @click="createGoal">Create Goal</button>
+            </div>
+            <!-- Goal list -->
+            <div class="goal-list">
+                <h2>My Goals</h2>
+                <ul>
+                    <li v-for="goal in goals" :key="goal.id">
+                        <h3>{{ goal.title }}</h3>
+                        <p>{{ goal.description }}</p>
+                        <p>Due Date: {{ goal.dueDate }}</p>
+                        <button @click="completeGoal(goal)">Complete</button>
+                        <button @click="deleteGoal(goal)">Delete</button>
+                    </li>
+                </ul>
+            </div>
+        </main>
+        <footer>
+            &copy; 2023 ProgressTracker - Created by Namra Patel
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.6/dist/vue.global.min.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    newGoal: {
+                        title: "",
+                        description: "",
+                        dueDate: "",
+                    },
+                    goals: [],
+                };
+            },
+            methods: {
+                createGoal() {
+                    // Simulate goal creation logic
+                    if (this.newGoal.title && this.newGoal.dueDate) {
+                        this.goals.push({
+                            id: Date.now(),
+                            title: this.newGoal.title,
+                            description: this.newGoal.description,
+                            dueDate: this.newGoal.dueDate,
+                            completed: false,
+                        });
+                        this.newGoal = {
+                            title: "",
+                            description: "",
+                            dueDate: "",
+                        };
+                    }
+                },
+                completeGoal(goal) {
+                    // Simulate marking a goal as completed
+                    goal.completed = true;
+                },
+                deleteGoal(goal) {
+                    // Simulate goal deletion logic
+                    const index = this.goals.indexOf(goal);
+                    if (index !== -1) {
+                        this.goals.splice(index, 1);
+                    }
+                },
+            },
+        });
+
+        app.mount("#app");
+    </script>
+</body>
+</html>
